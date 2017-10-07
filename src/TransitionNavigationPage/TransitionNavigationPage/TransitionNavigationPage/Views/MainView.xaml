@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TransitionNavigationPage.Views.MainView"
+             Title="Transitions">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Button
+                    Text="Fade"
+                    Command="{Binding FadeCommand}"/>
+                <Button
+                    Text="Flip"
+                    Command="{Binding FlipCommand}"/>
+                <Button
+                    Text="Scale"
+                    Command="{Binding ScaleCommand}"/>
+                <Button
+                    Text="SlideFromLeft"
+                    Command="{Binding SlideFromLeftCommand}"/>
+                <Button
+                    Text="SlideFromRight"
+                    Command="{Binding SlideFromRightCommand}"/>
+                <Button 
+                    Text="SlideFromTop"
+                    Command="{Binding SlideFromTopCommand}"/>
+                <Button 
+                    Text="SlideFromBottom"
+                    Command="{Binding SlideFromBottomCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
