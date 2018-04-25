@@ -1,8 +1,9 @@
-﻿using CoreAnimation;
-using CoreGraphics;
-using System;
+﻿using System;
 using System.ComponentModel;
+using CoreAnimation;
+using CoreGraphics;
 using TransitionNavigationPage.Controls;
+using TransitionNavigationPage.Enums;
 using TransitionNavigationPage.iOS.Renderers;
 using UIKit;
 using Xamarin.Forms;
@@ -13,7 +14,7 @@ namespace TransitionNavigationPage.iOS.Renderers
 {
     public class TransitionNavigationPageRenderer : NavigationRenderer
     {
-        private TransitionType _transitionType;
+        private TransitionType _transitionType = TransitionType.Default;
 
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
@@ -29,100 +30,104 @@ namespace TransitionNavigationPage.iOS.Renderers
 
         public override void PushViewController(UIViewController viewController, bool animated)
         {
-            if (animated)
+            if (_transitionType == TransitionType.None)
             {
-                if (_transitionType == TransitionType.Fade)
-                {
-                    FadeAnimation(View);
-                }
-                else if (_transitionType == TransitionType.Flip)
-                {
-                    FlipAnimation(View);
-                }
-                else if (_transitionType == TransitionType.Scale)
-                {
-                    ScaleAnimation(View);
-                }
-                else
-                {
-                    var transition = CATransition.CreateAnimation();
-                    transition.Duration = 0.5f;
-                    transition.Type = CAAnimation.TransitionPush;
-
-                    switch (_transitionType)
-                    {
-                        case TransitionType.SlideFromBottom:
-                            transition.Subtype = CAAnimation.TransitionFromBottom;
-                            break;
-                        case TransitionType.SlideFromLeft:
-                            transition.Subtype = CAAnimation.TransitionFromLeft;
-                            break;
-                        case TransitionType.SlideFromRight:
-                            transition.Subtype = CAAnimation.TransitionFromRight;
-                            break;
-                        case TransitionType.SlideFromTop:
-                            transition.Subtype = CAAnimation.TransitionFromTop;
-                            break;
-                    }
-
-                    View.Layer.AddAnimation(transition, null);
-                }
-
                 base.PushViewController(viewController, false);
+                return;
+            }
+            else if (_transitionType == TransitionType.Default)
+            {
+                base.PushViewController(viewController, animated);
+                return;
+            }
+            else if (_transitionType == TransitionType.Fade)
+            {
+                FadeAnimation(View);
+            }
+            else if (_transitionType == TransitionType.Flip)
+            {
+                FlipAnimation(View);
+            }
+            else if (_transitionType == TransitionType.Scale)
+            {
+                ScaleAnimation(View);
             }
             else
             {
-                base.PushViewController(viewController, false);
+                var transition = CATransition.CreateAnimation();
+                transition.Duration = 0.5f;
+                transition.Type = CAAnimation.TransitionPush;
+
+                switch (_transitionType)
+                {
+                    case TransitionType.SlideFromBottom:
+                        transition.Subtype = CAAnimation.TransitionFromBottom;
+                        break;
+                    case TransitionType.SlideFromLeft:
+                        transition.Subtype = CAAnimation.TransitionFromLeft;
+                        break;
+                    case TransitionType.SlideFromRight:
+                        transition.Subtype = CAAnimation.TransitionFromRight;
+                        break;
+                    case TransitionType.SlideFromTop:
+                        transition.Subtype = CAAnimation.TransitionFromTop;
+                        break;
+                }
+
+                View.Layer.AddAnimation(transition, null);
             }
+
+            base.PushViewController(viewController, false);
         }
 
         public override UIViewController PopViewController(bool animated)
         {
-            if (animated)
+            if (_transitionType == TransitionType.None)
             {
-                if (_transitionType == TransitionType.Fade)
-                {
-                    FadeAnimation(View);
-                }
-                else if (_transitionType == TransitionType.Flip)
-                {
-                    FlipAnimation(View);
-                }
-                else if (_transitionType == TransitionType.Scale)
-                {
-                    ScaleAnimation(View);
-                }
-                else
-                {
-                    var transition = CATransition.CreateAnimation();
-                    transition.Duration = 0.5f;
-                    transition.Type = CAAnimation.TransitionPush;
-
-                    switch (_transitionType)
-                    {
-                        case TransitionType.SlideFromBottom:
-                            transition.Subtype = CAAnimation.TransitionFromTop;
-                            break;
-                        case TransitionType.SlideFromLeft:
-                            transition.Subtype = CAAnimation.TransitionFromRight;
-                            break;
-                        case TransitionType.SlideFromRight:
-                            transition.Subtype = CAAnimation.TransitionFromLeft;
-                            break;
-                        case TransitionType.SlideFromTop:
-                            transition.Subtype = CAAnimation.TransitionFromBottom;
-                            break;
-                    }
-
-                    View.Layer.AddAnimation(transition, null);
-                }
-
                 return base.PopViewController(false);
+            }
+            if (_transitionType == TransitionType.Default)
+            {
+                return base.PopViewController(animated);
+            }
+            if (_transitionType == TransitionType.Fade)
+            {
+                FadeAnimation(View);
+            }
+            else if (_transitionType == TransitionType.Flip)
+            {
+                FlipAnimation(View);
+            }
+            else if (_transitionType == TransitionType.Scale)
+            {
+                ScaleAnimation(View);
             }
             else
             {
-                return base.PopViewController(false);
+                var transition = CATransition.CreateAnimation();
+                transition.Duration = 0.5f;
+                transition.Type = CAAnimation.TransitionPush;
+
+                switch (_transitionType)
+                {
+                    case TransitionType.SlideFromBottom:
+                        transition.Subtype = CAAnimation.TransitionFromTop;
+                        break;
+                    case TransitionType.SlideFromLeft:
+                        transition.Subtype = CAAnimation.TransitionFromRight;
+                        break;
+                    case TransitionType.SlideFromRight:
+                        transition.Subtype = CAAnimation.TransitionFromLeft;
+                        break;
+                    case TransitionType.SlideFromTop:
+                        transition.Subtype = CAAnimation.TransitionFromBottom;
+                        break;
+                }
+
+                View.Layer.AddAnimation(transition, null);
             }
+
+            return base.PopViewController(false);
         }
 
         private void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

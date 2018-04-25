@@ -1,4 +1,4 @@
-﻿using TransitionNavigationPage.Controls;
+﻿using TransitionNavigationPage.Enums;
 using TransitionNavigationPage.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
