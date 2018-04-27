@@ -1,18 +1,8 @@
-﻿using Xamarin.Forms;
+﻿using TransitionNavigationPage.Enums;
+using Xamarin.Forms;
 
 namespace TransitionNavigationPage.Controls
 {
-    public enum TransitionType
-    {
-        Fade,
-        Flip,
-        Scale,
-        SlideFromLeft,
-        SlideFromRight,
-        SlideFromTop,
-        SlideFromBottom
-    }
-
     public class TransitionNavigationPage : NavigationPage
     {
         public static readonly BindableProperty TransitionTypeProperty =
@@ -26,12 +16,10 @@ namespace TransitionNavigationPage.Controls
 
         public TransitionNavigationPage() : base()
         {
-     
         }
 
         public TransitionNavigationPage(Page root) : base(root)
         {
- 
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using TransitionNavigationPage.Controls;
+using TransitionNavigationPage.Enums;
 using Xamarin.Forms;
 
 namespace TransitionNavigationPage.ViewModels
